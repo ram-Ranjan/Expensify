@@ -46,7 +46,7 @@ document
           document.getElementById("signupForm").reset();
         })
         .catch((err) => {
-          alert("User Sign up Failed:" + err.response.data.error);
+          alert("User Sign up Failed:" + err.response);
         });
     }
   });
