@@ -6,7 +6,6 @@ const Expense = require("../models/expense");
 const sequelize = require("../config/database");
 const s3Services = require("../services/awsS3Services");
 const ReportHistory = require("../models/reportHistroy");
-const { where } = require("sequelize");
 
 let rzp;
 try {
