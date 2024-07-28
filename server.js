@@ -30,9 +30,11 @@ app.use("/api/premium", premiumRouter);
 app.use("/api/password", passwordRouter);
 // app.use(morgan('combined',{ stream:accessLogStream })); //,{ stream:accessLogStream }
 
-app.use((req,res) => {
-  res.sendFile(path.join(__dirname,`public/${req.url}`))
-})
+// app.use((req,res) => {
+//   res.sendFile(path.join(__dirname,`public/${req.url}`))
+// })
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 const User = require("./models/user");
