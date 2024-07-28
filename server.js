@@ -30,6 +30,11 @@ app.use("/api/premium", premiumRouter);
 app.use("/api/password", passwordRouter);
 // app.use(morgan('combined',{ stream:accessLogStream })); //,{ stream:accessLogStream }
 
+app.use((req,res) => {
+  res.sendFile(path.join(__dirname,`public/${req.url}`))
+})
+
+
 const User = require("./models/user");
 const Expense = require("./models/expense");
 const Order = require("./models/orders");
@@ -60,10 +65,11 @@ User.hasMany(ReportHistory);
 ReportHistory.belongsTo(User);
 
 const port = 3000;
+const host = '0.0.0.0';
 sequelize
   .sync({ alter: true })
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port,host, () => {
       console.log(`listening from http://localhost:${port}`);
     });
   })
