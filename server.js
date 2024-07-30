@@ -6,7 +6,6 @@ const helmet = require('helmet');
 const app = express();
 const fs = require('fs');
 const path = require('path');
-// const morgan = require('morgan');
 
 
 app.use(cors());
@@ -17,24 +16,17 @@ const expenseRouter = require("./routes/expenseRoutes");
 const premiumRouter = require("./routes/premiumRoutes");
 const passwordRouter = require("./routes/passwordRoutes");
 
-// const accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),
-// { flags: 'a'}
-// );
-
 
 
 app.use(helmet());
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRouter);
 app.use("/api/premium", premiumRouter);
 app.use("/api/password", passwordRouter);
-// app.use(morgan('combined',{ stream:accessLogStream })); //,{ stream:accessLogStream }
 
-// app.use((req,res) => {
-//   res.sendFile(path.join(__dirname,`public/${req.url}`))
-// })
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 const User = require("./models/user");
@@ -42,17 +34,6 @@ const Expense = require("./models/expense");
 const Order = require("./models/orders");
 const ForgotPasswordRequest = require("./models/forgotPasswordRequests");
 const ReportHistory = require("./models/reportHistroy");
-
-// app.use(morgan('dev'));
-
-// console.log('Before Morgan');
-// app.use(morgan('combined', {
-//   stream: {
-//     write: (message) => {
-//       console.log('Morgan log:', message.trim());
-//     }
-//   }
-// }));console.log('After Morgan');
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
