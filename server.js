@@ -2,32 +2,41 @@ require("dotenv").config();
 const express = require("express");
 const sequelize = require("./config/database");
 const cors = require("cors");
-const helmet = require('helmet');
 const app = express();
 const fs = require('fs');
 const path = require('path');
+<<<<<<< HEAD
 
+=======
+>>>>>>> b50d8e5552c73c49d579dea39ea2bd6ee9b17235
 
 app.use(cors());
 app.use(express.json());
+// app.use(helmet());
 
 const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
 const premiumRouter = require("./routes/premiumRoutes");
 const passwordRouter = require("./routes/passwordRoutes");
 
+<<<<<<< HEAD
 
 
 app.use(helmet());
 
+=======
+>>>>>>> b50d8e5552c73c49d579dea39ea2bd6ee9b17235
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRouter);
 app.use("/api/premium", premiumRouter);
 app.use("/api/password", passwordRouter);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b50d8e5552c73c49d579dea39ea2bd6ee9b17235
 
 const User = require("./models/user");
 const Expense = require("./models/expense");
@@ -47,7 +56,7 @@ ForgotPasswordRequest.belongsTo(User);
 User.hasMany(ReportHistory);
 ReportHistory.belongsTo(User);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const host = '0.0.0.0';
 sequelize
   .sync({ alter: true })

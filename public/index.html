@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Expenses</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
     <header>
@@ -18,7 +18,7 @@
           <h2>Add New Expense</h2>
           <br />
           <button class="logout">Logout</button>
-          <form id="expenseForm">
+          <form id="expenseForm" method="post">
             <div class="form-group">
               <label for="date">Date:</label>
               <input type="date" name="date" id="date" required />
@@ -101,6 +101,6 @@
     </main>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>
