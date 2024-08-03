@@ -137,3 +137,41 @@ exports.getReportHistory = async (req, res) => {
     res.status(500).json({ error: err, message: "Couldn't load history" });
   }
 };
+
+
+exports.getLeaderBoard = async (req, res) => {
+  try {
+    //    const leaderboard=await User.findAll({
+    //         attributes:['id',
+    //             'username',
+    //           [Sequelize.fn('COALESCE', Sequelize.fn('SUM', Sequelize.col('Expenses.amount')), 0), 'totalExpenses']
+    //         ],
+    //         include:[{
+    //             model: Expenses,
+    //             attributes:[],
+    //             required: false
+    //         }] ,
+    //         group:['User.id'],
+    //         order: [[Sequelize.fn('COALESCE', Sequelize.fn('SUM', Sequelize.col('Expenses.amount')), 0), 'DESC']],
+    //         raw:true
+    //     });
+
+    const leaderboard = await User.findAll({
+      attributes: ["id", "username", "totalBalance"],
+      order: [["totalBalance", "DESC"]],
+      limit: 10,
+    });
+    // console.log(leaderboard)
+    const leaderboardWithHighlight = leaderboard.map((entry) => ({
+      id: entry.id,
+      username: entry.username,
+      totalBalance: entry.totalBalance,
+      isCurrentUser: entry.id === req.user.id,
+    }));
+
+    res.json(leaderboardWithHighlight);
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    res.status(500).json({ error: "Failed to fetch leaderboard" });
+  }
+};

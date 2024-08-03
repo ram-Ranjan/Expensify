@@ -9,10 +9,12 @@ function getAuthHeader() {
 }
 
 function showMessage(message) {
-  const messageElement = document.getElementById("message");
-  messageElement.textContent = message;
-  messageElement.className = "error";
-  setTimeout(() => (messageElement.textContent = ""), 3000);
+  const messageDiv = document.getElementById('message');
+  messageDiv.textContent = message;
+  messageDiv.style.display = 'block';
+  setTimeout(() => {
+    messageDiv.style.display = 'none';
+  }, 5000); // Hide after 5 seconds
 }
 
 document
@@ -136,7 +138,10 @@ function fetchExpenses(page = 1, limit = itemsPerPage) {
     
   })
     .catch((err) => {
-      console.error("Failed to fetch expenses:", err);
+      // console.error("Failed to fetch expenses:", err);
+      showMessage(
+        `Failed to Load leaderboard: ${err.response?.data?.error || err.message}`
+      )
       document.querySelector("main").innerHTML = `
                 <h1>404 NOT FOUND</h1><BR><BR>
                 <h2>Page Not Found</h2>
@@ -205,7 +210,7 @@ function createPaginationButton(text, onClick) {
 function handleEdit(event) {
   const expenseId = event.target.dataset.id;
   if(!expenseId){
-    showMessage("Failed to Edit ########### expense details");
+    showMessage("Failed to Edit  expense details");
   return;
   }
   axios
@@ -223,7 +228,7 @@ function handleEdit(event) {
       form.querySelector('button[type="submit"]').textContent =
         "Update Expense";
     })
-    .catch((err) => showMessage("Failed to fetch expense details"));
+    .catch((err) => showMessage("Failed to Edit Expense"));
 }
 
 document.querySelector(".logout").addEventListener("click", function () {
@@ -334,7 +339,7 @@ function fetchLeaderboard() {
   leaderboardSection.innerHTML = "<p>Loading leaderboard...</p>";
 
   axios
-    .get(`${base_url}/expense/premium/leaderboard`, getAuthHeader())
+    .get(`${base_url}/premium/leaderboard`, getAuthHeader())
     .then((response) => {
       leaderboardSection.innerHTML = `<h2>Expense Leaderboard</h2>`;
       const table = document.createElement("table");
@@ -357,8 +362,12 @@ function fetchLeaderboard() {
       leaderboardSection.appendChild(table);
     })
     .catch((err) => {
-      leaderboardSection.innerHTML =
-        "<p>Failed to load leaderboard. Please try again later.</p>";
+     
+      showMessage(
+        `Failed to Load leaderboard: ${err.response?.data?.error || err.message}`
+      )
+      // leaderboardSection.innerHTML =
+      //   "<p>Failed to load leaderboard. Please try again later.</p>";
     });
 }
 
@@ -392,9 +401,12 @@ function fetchReportHistory() {
       });
       reportSection.appendChild(table);
     })
-    .catch(() => {
-      reportSection.innerHTML =
-        "<p>Failed to load report history. Please try again later.</p>";
+    .catch((err) => {
+      showMessage(
+        `Failed to Load History: ${err.response?.data?.error || err.message}`
+      )
+      // reportSection.innerHTML =
+      //   "<p>Failed to load report history. Please try again later.</p>";
     });
 }
 
@@ -427,7 +439,9 @@ function checkPremiumStatus() {
         document.getElementById("downloadBtn").style.display = "none";
       }
     })
-    .catch((error) => console.error("Error checking premium status:", error));
+    .catch((err) => { showMessage(
+      `Failed to Check Premium Status: ${err.response?.data?.error || err.message}`
+    )});
 }
  
 const paginationLimit = document.getElementById("paginationLimit");
@@ -445,4 +459,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-
+// axios.interceptors.response.use(
+//   response => response,
+//   error => {
+//     showMessage(`An error occurred: ${error.response?.data?.message || error.message}`);
+//     return Promise.reject(error);
+//   }
+// );

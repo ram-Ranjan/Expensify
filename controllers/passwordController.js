@@ -33,7 +33,7 @@ exports.forgotPassword = async (req, res) => {
       { transaction }
     );
 
-    const resetUrl = `http://localhost:3000/api/password/resetPassword/${resetId}`;
+    const resetUrl = `http://13.127.88.225:3000/api/password/resetPassword/${resetId}`;
 
     const sender = {
       email: "rapranjan@gmail.com",
