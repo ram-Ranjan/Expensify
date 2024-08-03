@@ -44,6 +44,8 @@ document
           confirm("User Signed Up successfully!");
           console.log("User Signed Up");
           document.getElementById("signupForm").reset();
+          window.location.href = "login.html";
+
         })
         .catch((err) => {
           alert("User Sign up Failed:" + err.response);

@@ -3,19 +3,16 @@ const express = require("express");
 const sequelize = require("./config/database");
 const cors = require("cors");
 const app = express();
-const fs = require('fs');
-const path = require('path');
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
-// app.use(helmet());
+app.use(express.static(path.join(__dirname, "public")));
 
 const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
 const premiumRouter = require("./routes/premiumRoutes");
 const passwordRouter = require("./routes/passwordRoutes");
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRouter);
@@ -41,12 +38,12 @@ User.hasMany(ReportHistory);
 ReportHistory.belongsTo(User);
 
 const port = process.env.PORT || 3000;
-const host = '0.0.0.0';
+const host = "0.0.0.0";
 sequelize
   .sync({ alter: true })
   .then(() => {
-    app.listen(port,host, () => {
-      console.log(`listening from http://localhost:${port}`);
+    app.listen(port, host, () => {
+      console.log(`listening from http://13.127.88.225:${port}`);
     });
   })
   .catch((err) => console.log(err));

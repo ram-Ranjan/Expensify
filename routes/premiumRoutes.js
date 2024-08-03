@@ -22,4 +22,10 @@ router.get("/download",
     authenticateJWT,
     premiumController.getReportHistory)
 
+    router.get(
+      "/leaderboard",
+      authenticateJWT,
+      premiumController.getLeaderBoard
+    );
+
 module.exports = router;
