@@ -9,10 +9,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+
 const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
 const premiumRouter = require("./routes/premiumRoutes");
 const passwordRouter = require("./routes/passwordRoutes");
+
 
 app.use("/api/user", userRouter);
 app.use("/api/expense", expenseRouter);
